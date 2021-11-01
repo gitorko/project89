@@ -8,7 +8,6 @@ class RestService {
             headers: {
                 Accept: 'application/json',
                 'Content-Type': 'application/json',
-                'Authorization': "Bearer " + AuthService.getToken(),
             },
         }).then(response => {
             if (response.ok) {

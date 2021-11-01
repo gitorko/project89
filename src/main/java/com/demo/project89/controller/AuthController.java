@@ -52,7 +52,7 @@ public class AuthController {
                 .map(auth -> auth.getAuthority())
                 .collect(Collectors.toList());
         JwtResponse jwtResponse = new JwtResponse();
-        jwtResponse.setUserName(user.getUsername());
+        jwtResponse.setUsername(user.getUsername());
         jwtResponse.setToken(token);
         jwtResponse.setRoles(roles);
         return ResponseEntity.ok(jwtResponse);
