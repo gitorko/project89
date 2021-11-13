@@ -5,8 +5,6 @@
 #REACT
 ################################################################################
 ui/node_modules/
-ui/package-lock.json
-ui/yarn.lock
 
 # dependencies
 /node_modules

@@ -1,8 +1,8 @@
-import jwt from "jsonwebtoken";
+import jwt from 'jsonwebtoken';
 
 class AuthService {
 
-    login = (cred) => {
+    login = (cred: any) => {
         var result = fetch("/api/auth/login", {
             method: 'POST',
             headers: {
@@ -42,6 +42,7 @@ class AuthService {
         if (token) {
             var decodedToken = jwt.decode(token, {complete: true});
             var dateNow = new Date();
+            // @ts-ignore
             if (decodedToken.exp < dateNow.getTime()) {
                 console.log("Token expired!")
                 return false

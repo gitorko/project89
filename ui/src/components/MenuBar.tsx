@@ -1,15 +1,15 @@
 import 'bootstrap/dist/css/bootstrap.min.css'
-import {Nav, Navbar, NavDropdown} from "react-bootstrap-v5"
+import {Nav, Navbar, NavDropdown} from "react-bootstrap"
 import {Person} from 'react-bootstrap-icons'
-import { useHistory } from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 import AuthService from "../services/AuthService"
 
-const MenuBar = (props) => {
-    let history = useHistory();
+function MenuBar() {
+    let navigate = useNavigate();
 
     const logout = () => {
         AuthService.logout()
-        history.push("/login");
+        navigate('/login');
     }
 
     return (
@@ -21,16 +21,12 @@ const MenuBar = (props) => {
                         width="30"
                         height="30"
                         className="d-inline-block align-top"
-                        alt="Demo App"
+                        alt="React App"
                     />
                 </Navbar.Brand>
                 <Nav className="mr-auto">
                     <Nav.Link href="/">Home</Nav.Link>
                     <Nav.Link href="/charts">Charts</Nav.Link>
-                    <NavDropdown title="Blank" id="basic-nav-dropdown">
-                        <NavDropdown.Item href="#">Blank 1</NavDropdown.Item>
-                        <NavDropdown.Item href="#">Blank 2</NavDropdown.Item>
-                    </NavDropdown>
                 </Nav>
 
                 {AuthService.getUser() ? (

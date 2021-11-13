@@ -1,9 +1,9 @@
-import AuthService from "./AuthService"
+import AuthService from './AuthService'
 
 class RestService {
 
     getTime = () => {
-        var result = fetch("/api/time", {
+        return fetch("/api/time", {
             method: 'GET',
             headers: {
                 Accept: 'application/json',
@@ -19,7 +19,6 @@ class RestService {
             console.error('ERROR!', error)
             return ""
         })
-        return result
     }
 
     fetchCustomers = async () => {
@@ -35,7 +34,7 @@ class RestService {
         return data
     }
 
-    deleteCustomer = async (id) => {
+    deleteCustomer = async (id: any) => {
         console.log('Delete', id)
         const response = await fetch(`/api/customer/${id}`, {
             method: 'DELETE',
@@ -53,7 +52,7 @@ class RestService {
         }
     }
 
-    addCustomer = async (customer) => {
+    addCustomer = async (customer: any) => {
         console.log(JSON.stringify(customer))
         const res = await fetch('/api/customer', {
             method: 'POST',
@@ -79,30 +78,32 @@ class RestService {
         return "Hello!"
     }
 
-    getPieDataFromServer = async () => {
-        const response = await fetch("/api/pie-data", {
+    getPieDataFromServer() {
+        return fetch("/api/pie-data", {
             method: 'GET',
             headers: {
                 Accept: 'application/json',
                 'Content-Type': 'application/json',
                 'Authorization': "Bearer " + AuthService.getToken(),
             },
+        }).then(res => res.json()).catch(error => {
+            console.error('ERROR!', error)
+            return ""
         })
-        const data = await response.json()
-        return data
     }
 
-    getColumnDataFromServer = async () => {
-        const response = await fetch("/api/column-data", {
+    getColumnDataFromServer() {
+        return fetch("/api/column-data", {
             method: 'GET',
             headers: {
                 Accept: 'application/json',
                 'Content-Type': 'application/json',
                 'Authorization': "Bearer " + AuthService.getToken(),
             },
+        }).then(res => res.json()).catch(error => {
+            console.error('ERROR!', error)
+            return ""
         })
-        const data = await response.json()
-        return data
     }
 
 }

@@ -1,7 +1,7 @@
 import 'bootstrap/dist/css/bootstrap.min.css'
-import {Navbar} from "react-bootstrap-v5"
+import {Navbar} from "react-bootstrap"
 
-const LoginBar = (props) => {
+function LoginBar() {
     return (
         <div className="container-fluid">
             <Navbar bg="light">

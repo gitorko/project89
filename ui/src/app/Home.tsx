@@ -1,15 +1,15 @@
-import MenuBar from "./components/MenuBar"
+import MenuBar from "../components/MenuBar"
 import PropTypes from 'prop-types'
-import { useEffect, useState } from 'react'
-import { Alert, Button, Col, Container, Form, Row, Table } from "react-bootstrap-v5"
-import { Trash } from 'react-bootstrap-icons'
-import RestService from "./services/RestService"
-import AuthService from "./services/AuthService"
-import { useHistory } from 'react-router-dom';
+import {useEffect, useState} from 'react'
+import {Alert, Button, Col, Container, Form, Row, Table} from "react-bootstrap"
+import {Trash} from 'react-bootstrap-icons'
+import RestService from "../services/RestService"
+import AuthService from "../services/AuthService"
+import {useNavigate} from "react-router-dom";
 
-const Home = () => {
+function Home() {
 
-    let history = useHistory();
+    let navigate = useNavigate();
     const [customers, setCustomers] = useState([])
     const [time, setTime] = useState()
     const [customer, setCustomer] = useState({
@@ -26,10 +26,13 @@ const Home = () => {
         setCustomers(customersFromServer)
     }
 
-    const deleteCustomer = async (id) => {
+    const deleteCustomer = async (id: any) => {
         RestService.deleteCustomer(id).then((res) => {
-            if(res) {
-                setCustomers(customers.filter((customer) => customer.id !== id))
+            if (res) {
+                setCustomers(customers.filter((customer) => {
+                    // @ts-ignore
+                    return customer.id !== id;
+                }))
                 setFlashMsg({
                     ...flashMsg,
                     'success': 'Deleted user: ' + id
@@ -40,7 +43,7 @@ const Home = () => {
         })
     }
 
-    const onSubmit = (e) => {
+    const onSubmit = (e: any) => {
         e.preventDefault()
         if (!customer.firstName || !customer.lastName) {
             alert('Please enter the values')
@@ -57,13 +60,14 @@ const Home = () => {
         })
     }
 
-    const addCustomer = async (customer) => {
+    const addCustomer = async (customer: any) => {
         RestService.addCustomer(customer).then((data) => {
+            // @ts-ignore
             setCustomers([...customers, data])
         })
     }
 
-    const handleChange = (e) => {
+    const handleChange = (e: any) => {
         setCustomer({
             ...customer,
             [e.target.name]: e.target.value
@@ -72,7 +76,7 @@ const Home = () => {
 
     useEffect(() => {
         if (!AuthService.isAuthenticated()) {
-            history.push("/login");
+            navigate('/login');
             return
         }
         setFlashMsg({
@@ -81,8 +85,9 @@ const Home = () => {
         })
         RestService.getTime().then(res => setTime(res))
         getCustomers()
-    }, [history])
+    }, [])
 
+    // @ts-ignore
     Home.propTypes = {
         title: PropTypes.string,
         onClick: PropTypes.func,
@@ -90,15 +95,15 @@ const Home = () => {
 
     return (
         <>
-            <MenuBar />
-            <br />
+            <MenuBar/>
+            <br/>
             <Container>
                 <Row>
                     <Col className={"text-center"}>
-                        <p className="text-end">Current Date : {time}</p>
+                        <p className="text-end">Server Time : {time}</p>
                     </Col>
                 </Row>
-                <br />
+                <br/>
 
                 {flashMsg.success && (
                     <Row>
@@ -115,14 +120,15 @@ const Home = () => {
                         <h2>Customers</h2>
                     </Col>
                 </Row>
-                <br />
+                <br/>
 
                 <Row>
                     <Col md={"4"}>
                         <Form onSubmit={onSubmit}>
                             <Form.Group controlId="formFirstName" className={"mb-3"}>
                                 <Form.Label>First Name</Form.Label>
-                                <Form.Control type="text" placeholder="Enter First Name" name="firstName" value={customer.firstName} onChange={handleChange} />
+                                <Form.Control type="text" placeholder="Enter First Name" name="firstName"
+                                              value={customer.firstName} onChange={handleChange}/>
                                 <Form.Text className="text-muted">
                                     Enter first name!
                                 </Form.Text>
@@ -130,10 +136,11 @@ const Home = () => {
 
                             <Form.Group controlId="formLastName" className={"mb-3"}>
                                 <Form.Label>LastName</Form.Label>
-                                <Form.Control type="text" placeholder="LastName" name="lastName" value={customer.lastName} onChange={handleChange} />
+                                <Form.Control type="text" placeholder="LastName" name="lastName"
+                                              value={customer.lastName} onChange={handleChange}/>
                             </Form.Group>
 
-                            <Button variant="primary" type="submit" block>
+                            <Button variant="primary" type="submit">
                                 Submit
                             </Button>
                         </Form>
@@ -141,20 +148,21 @@ const Home = () => {
                     <Col md={"8"}>
                         <Table striped bordered hover>
                             <thead>
-                                <tr>
-                                    <th>First Name</th>
-                                    <th>Last Name</th>
-                                    <th>Action</th>
-                                </tr>
+                            <tr>
+                                <th>First Name</th>
+                                <th>Last Name</th>
+                                <th>Action</th>
+                            </tr>
                             </thead>
                             <tbody>
-                                {customers.map((customer) => (
-                                    <tr key={customer.id}>
-                                        <td>{customer.firstName}</td>
-                                        <td>{customer.lastName}</td>
-                                        <td><Trash onClick={() => deleteCustomer(customer.id)} style={{ color: 'red', cursor: 'pointer' }} /></td>
-                                    </tr>
-                                ))}
+                            {customers.map((customer: any) => (
+                                <tr key={customer.id}>
+                                    <td>{customer.firstName}</td>
+                                    <td>{customer.lastName}</td>
+                                    <td><Trash onClick={() => deleteCustomer(customer.id)}
+                                               style={{color: 'red', cursor: 'pointer'}}/></td>
+                                </tr>
+                            ))}
                             </tbody>
                         </Table>
                     </Col>
