@@ -79,3 +79,8 @@ user: user
 pwd: user@123
 ```
 
+```bash
+docker build -f docker/Dockerfile --force-rm -t project89:1.0.0 .
+docker images
+docker-compose -f docker/docker-compose.yml up 
+```
