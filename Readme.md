@@ -82,5 +82,7 @@ pwd: user@123
 ```bash
 docker build -f docker/Dockerfile --force-rm -t project89:1.0.0 .
 docker images
+docker tag project89:1.0.0 gitorko/project89:1.0.0
+docker push gitorko/project89:1.0.0
 docker-compose -f docker/docker-compose.yml up 
 ```
