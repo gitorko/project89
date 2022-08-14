@@ -83,3 +83,23 @@ docker tag project89:1.0.0 gitorko/project89:1.0.0
 docker push gitorko/project89:1.0.0
 docker-compose -f docker/docker-compose.yml up 
 ```
+
+### Commands
+
+Commands to create new ui project if needed
+
+```bash
+yarn create react-app ui --template typescript
+yarn add jsonwebtoken types/jsonwebtoken
+yarn add react-router-dom
+yarn add react-bootstrap bootstrap
+yarn add react-chartjs-2 chart.js
+yarn add react-bootstrap-icons
+yarn add prop-types
+```
+
+proxy is added to package.json to allow the requests to be redirected to the backend
+
+```bash
+"proxy": "http://localhost:8080/"
+```
