@@ -9,7 +9,7 @@ spring:
     password: test@123
   jpa:
     show-sql: false
-    hibernate.ddl-auto: create-drop
+    hibernate.ddl-auto: update
     properties.hibernate.temp.use_jdbc_metadata_defaults: false
     database-platform: org.hibernate.dialect.PostgreSQLDialect
 
